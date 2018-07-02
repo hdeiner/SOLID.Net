@@ -1,5 +1,5 @@
 ﻿using System;
-using System.IO;
+using System.Text;
 using Xunit;
 
 namespace SOLID.Net.DependencyInversion_Bad
@@ -8,44 +8,44 @@ namespace SOLID.Net.DependencyInversion_Bad
     {
         [Fact]
         public void testReturnsCurrentWeather() {
-            StreamWriter sw = new StreamWriter(new FileStream("tmp.txt", FileMode.Create));
+            System.IO.MemoryStream ms = new System.IO.MemoryStream();
+            System.IO.StreamWriter sw = new System.IO.StreamWriter(ms);
             Console.SetOut(sw);
 
             WeatherTracker tracker = new WeatherTracker();
             tracker.setCurrentConditions("rainy");
 
             sw.Flush();
-            sw.Close();
 
             Assert.Equal("rainy", tracker.currentConditions);
         }
 
         [Fact]
         public void testAlertsPhoneUsersWhenRaining() {
-            StreamWriter sw = new StreamWriter(new FileStream("tmp.txt", FileMode.Create));
+            System.IO.MemoryStream ms = new System.IO.MemoryStream();
+            System.IO.StreamWriter sw = new System.IO.StreamWriter(ms);
             Console.SetOut(sw);
 
             WeatherTracker tracker = new WeatherTracker();
             tracker.setCurrentConditions("rainy");
 
             sw.Flush();
-            sw.Close();
 
-            Assert.Equal("It is rainy\n", File.ReadAllText("tmp.txt"));
+            Assert.Equal("It is rainy\r\n", Encoding.ASCII.GetString(ms.ToArray()));
         }
 
         [Fact]
         public void testAlertsViaEmailWhenSunny() {
-            StreamWriter sw = new StreamWriter(new FileStream("tmp.txt", FileMode.Create));
+            System.IO.MemoryStream ms = new System.IO.MemoryStream();
+            System.IO.StreamWriter sw = new System.IO.StreamWriter(ms);
             Console.SetOut(sw);
 
             WeatherTracker tracker = new WeatherTracker();
             tracker.setCurrentConditions("sunny");
 
             sw.Flush();
-            sw.Close();
 
-            Assert.Equal("It is sunny\n", File.ReadAllText("tmp.txt"));
+            Assert.Equal("It is sunny\r\n", Encoding.ASCII.GetString(ms.ToArray()));
         }
 
     }

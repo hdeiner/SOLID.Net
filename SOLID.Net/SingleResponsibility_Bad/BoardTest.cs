@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
+using System.Text;
 using Xunit;
 
 namespace SOLID.Net.SingleResponsibility_Bad
@@ -47,17 +47,17 @@ namespace SOLID.Net.SingleResponsibility_Bad
         }
 
         [Fact]
-        public void testPrintsBoardToConsole() {            
-            StreamWriter sw = new StreamWriter(new FileStream("tmp.txt", FileMode.Create));
+        public void testPrintsBoardToConsole() {
+            System.IO.MemoryStream ms = new System.IO.MemoryStream();
+            System.IO.StreamWriter sw = new System.IO.StreamWriter(ms);
             Console.SetOut(sw);
 
             Board board = new Board();
             board.display();
 
             sw.Flush();
-            sw.Close();
             
-            Assert.Equal("0 | 1 | 2\n3 | 4 | 5\n6 | 7 | 8\n", File.ReadAllText("tmp.txt"));
+            Assert.Equal("0 | 1 | 2\n3 | 4 | 5\n6 | 7 | 8\r\n", Encoding.ASCII.GetString(ms.ToArray()));
         }
 
     }

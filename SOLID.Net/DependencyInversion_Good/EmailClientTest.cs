@@ -1,5 +1,5 @@
 ﻿using System;
-using System.IO;
+using System.Text;
 using Xunit;
 
 namespace SOLID.Net.DependencyInversion_Good
@@ -8,16 +8,16 @@ namespace SOLID.Net.DependencyInversion_Good
     {
         [Fact]
         public void testAlertsWhenSunny() {
-            StreamWriter sw = new StreamWriter(new FileStream("tmp.txt", FileMode.Create));
+            System.IO.MemoryStream ms = new System.IO.MemoryStream();
+            System.IO.StreamWriter sw = new System.IO.StreamWriter(ms);
             Console.SetOut(sw);
 
             EmailClient gmail = new EmailClient();
             gmail.alertWeatherConditions("sunny");
 
             sw.Flush();
-            sw.Close();
 
-            Assert.Equal("It is sunny\n", File.ReadAllText("tmp.txt"));
+            Assert.Equal("It is sunny\r\n", Encoding.ASCII.GetString(ms.ToArray()));
         }
 
     }

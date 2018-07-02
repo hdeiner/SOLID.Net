@@ -1,5 +1,5 @@
 ﻿using System;
-using System.IO;
+using System.Text;
 using Xunit;
 
 namespace SOLID.Net.SingleResponsibility_Good
@@ -10,16 +10,16 @@ namespace SOLID.Net.SingleResponsibility_Good
         public void testBoardPresenterPrintsBoardToConsole() {
             Board board = new Board(3);
 
-            StreamWriter sw = new StreamWriter(new FileStream("tmp.txt", FileMode.Create));
+            System.IO.MemoryStream ms = new System.IO.MemoryStream();
+            System.IO.StreamWriter sw = new System.IO.StreamWriter(ms);
             Console.SetOut(sw);
 
             BoardPresenter presenter = new BoardPresenter(board);
             presenter.displayBoard();
 
             sw.Flush();
-            sw.Close();
 
-            Assert.Equal("0|1|2\n3|4|5\n6|7|8\n\n", File.ReadAllText("tmp.txt"));
+            Assert.Equal("0|1|2\n3|4|5\n6|7|8\n\r\n", Encoding.ASCII.GetString(ms.ToArray()));
         }
 
     }
