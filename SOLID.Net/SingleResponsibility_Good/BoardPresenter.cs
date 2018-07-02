@@ -10,7 +10,7 @@ namespace SOLID.Net.SingleResponsibility_Good
             this.board = board;
         }
 
-        public void displayBoard() {
+        public String displayBoard() {
             String formattedBoard = "";
             for (int i = 0; i < this.board.size*this.board.size; i++) {
                 String borderOrNewline = "";
@@ -23,7 +23,7 @@ namespace SOLID.Net.SingleResponsibility_Good
                 formattedBoard += board.spots[i];
                 formattedBoard += borderOrNewline;
             }
-            Console.WriteLine(formattedBoard);
+            return formattedBoard;
         }
     }
 }

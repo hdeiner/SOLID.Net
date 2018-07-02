@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 using Xunit;
 
 namespace SOLID.Net.SingleResponsibility_Bad
@@ -48,16 +47,8 @@ namespace SOLID.Net.SingleResponsibility_Bad
 
         [Fact]
         public void testPrintsBoardToConsole() {
-            System.IO.MemoryStream ms = new System.IO.MemoryStream();
-            System.IO.StreamWriter sw = new System.IO.StreamWriter(ms);
-            Console.SetOut(sw);
-
             Board board = new Board();
-            board.display();
-
-            sw.Flush();
-            
-            Assert.Equal("0 | 1 | 2\n3 | 4 | 5\n6 | 7 | 8\n", Encoding.ASCII.GetString(ms.ToArray()).Replace("\r",""));
+            Assert.Equal("0 | 1 | 2\n3 | 4 | 5\n6 | 7 | 8", board.display());
         }
 
     }

@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Text;
+using SOLID.Net.DependencyInversion_Good;
 using SOLID.Net.OpenClosed_Good;
 using Xunit;
 
@@ -7,10 +9,20 @@ namespace SOLID.Net.DependencyInversion_Good
 {
     class MockNotifier : Notifier 
     {
-        public void alertWeatherConditions(String weatherDescription) 
-        {
-            Console.WriteLine("foo");
+        private List<String> consoleOutput;
+
+        public MockNotifier() {
+            consoleOutput = new List<string>();
         }
+        
+        public void alertWeatherConditions(String weatherDescription) {
+            consoleOutput.Add("foo");
+        }
+
+        public String getConsoleOutput() {
+            return String.Join("\n", consoleOutput);
+        }
+
     }
 
     public class WeatherTrackerTest
@@ -19,24 +31,16 @@ namespace SOLID.Net.DependencyInversion_Good
         public void testSetsCurrentWeatherConditions() {
             WeatherTracker tracker = new WeatherTracker();
             tracker.setCurrentConditions("cloudy");
-
             Assert.Equal("cloudy", tracker.currentConditions);
         }
 
         [Fact]
         public void testNotifiesWhenWeatherChanges() {
-            System.IO.MemoryStream ms = new System.IO.MemoryStream();
-            System.IO.StreamWriter sw = new System.IO.StreamWriter(ms);
-            Console.SetOut(sw);
-
             WeatherTracker tracker = new WeatherTracker();
             tracker.setCurrentConditions("cloudy");
             MockNotifier mockNotifier = new MockNotifier();
             tracker.notify(mockNotifier);
-
-            sw.Flush();
-
-            Assert.Equal("foo\n", Encoding.ASCII.GetString(ms.ToArray()).Replace("\r",""));
+            Assert.Equal("foo", mockNotifier.getConsoleOutput());
         }
 
     }

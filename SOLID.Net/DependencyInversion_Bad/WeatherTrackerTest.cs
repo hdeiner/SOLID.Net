@@ -8,44 +8,26 @@ namespace SOLID.Net.DependencyInversion_Bad
     {
         [Fact]
         public void testReturnsCurrentWeather() {
-            System.IO.MemoryStream ms = new System.IO.MemoryStream();
-            System.IO.StreamWriter sw = new System.IO.StreamWriter(ms);
-            Console.SetOut(sw);
-
             WeatherTracker tracker = new WeatherTracker();
             tracker.setCurrentConditions("rainy");
-
-            sw.Flush();
 
             Assert.Equal("rainy", tracker.currentConditions);
         }
 
         [Fact]
         public void testAlertsPhoneUsersWhenRaining() {
-            System.IO.MemoryStream ms = new System.IO.MemoryStream();
-            System.IO.StreamWriter sw = new System.IO.StreamWriter(ms);
-            Console.SetOut(sw);
-
             WeatherTracker tracker = new WeatherTracker();
             tracker.setCurrentConditions("rainy");
 
-            sw.Flush();
-
-            Assert.Equal("It is rainy\n", Encoding.ASCII.GetString(ms.ToArray()).Replace("\r",""));
+            Assert.Equal("It is rainy", tracker.getConsoleOutput());
         }
 
         [Fact]
         public void testAlertsViaEmailWhenSunny() {
-            System.IO.MemoryStream ms = new System.IO.MemoryStream();
-            System.IO.StreamWriter sw = new System.IO.StreamWriter(ms);
-            Console.SetOut(sw);
-
             WeatherTracker tracker = new WeatherTracker();
             tracker.setCurrentConditions("sunny");
 
-            sw.Flush();
-
-            Assert.Equal("It is sunny\n", Encoding.ASCII.GetString(ms.ToArray()).Replace("\r",""));
+            Assert.Equal("It is sunny", tracker.getConsoleOutput());
         }
 
     }

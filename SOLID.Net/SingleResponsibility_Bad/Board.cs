@@ -38,9 +38,8 @@ namespace SOLID.Net.SingleResponsibility_Bad
             return thirdRow;
         }
 
-        public void display() {
-            String formattedFirstRow = this.spots[0] + " | " + this.spots[1] + " | " + this.spots[2] + "\n" + this.spots[3] + " | " + this.spots[4] + " | " + this.spots[5] + "\n" + this.spots[6] + " | " + this.spots[7] + " | " + this.spots[8];
-            Console.WriteLine(formattedFirstRow);
+        public String display() {
+            return this.spots[0] + " | " + this.spots[1] + " | " + this.spots[2] + "\n" + this.spots[3] + " | " + this.spots[4] + " | " + this.spots[5] + "\n" + this.spots[6] + " | " + this.spots[7] + " | " + this.spots[8];
         } 
         
     }
