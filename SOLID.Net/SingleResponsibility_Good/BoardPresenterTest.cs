@@ -19,7 +19,7 @@ namespace SOLID.Net.SingleResponsibility_Good
 
             sw.Flush();
 
-            Assert.Equal("0|1|2\n3|4|5\n6|7|8\n\r\n", Encoding.ASCII.GetString(ms.ToArray()));
+            Assert.Equal("0|1|2\n3|4|5\n6|7|8\n\n", Encoding.ASCII.GetString(ms.ToArray()).Replace("\r",""));
         }
 
     }

@@ -36,7 +36,7 @@ namespace SOLID.Net.DependencyInversion_Good
 
             sw.Flush();
 
-            Assert.Equal("foo\r\n", Encoding.ASCII.GetString(ms.ToArray()));
+            Assert.Equal("foo\n", Encoding.ASCII.GetString(ms.ToArray()).Replace("\r",""));
         }
 
     }

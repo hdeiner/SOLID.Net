@@ -31,7 +31,7 @@ namespace SOLID.Net.DependencyInversion_Bad
 
             sw.Flush();
 
-            Assert.Equal("It is rainy\r\n", Encoding.ASCII.GetString(ms.ToArray()));
+            Assert.Equal("It is rainy\n", Encoding.ASCII.GetString(ms.ToArray()).Replace("\r",""));
         }
 
         [Fact]
@@ -45,7 +45,7 @@ namespace SOLID.Net.DependencyInversion_Bad
 
             sw.Flush();
 
-            Assert.Equal("It is sunny\r\n", Encoding.ASCII.GetString(ms.ToArray()));
+            Assert.Equal("It is sunny\n", Encoding.ASCII.GetString(ms.ToArray()).Replace("\r",""));
         }
 
     }
